@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สมัครสมาชิก</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0b08;
+    --surface: #1a1510;
+    --card: #1f1a14;
+    --border: #332b20;
+    --gold: #c9a84c;
+    --gold2: #e8c97a;
+    --gold-dim: rgba(201,168,76,0.15);
+    --text: #f0e8d8;
+    --muted: #7a6a52;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    font-family: 'Sarabun', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Ambient glow */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 500px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Hero section */
+  .hero {
+    width: 100%;
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    position: relative;
+    z-index: 1;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero .crown {
+    font-size: 2.8rem;
+    display: block;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,0.5));
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-6px); }
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+  }
+
+  .divider-line {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+
+  .divider-line.right {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .divider-diamond {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 0 60px rgba(201,168,76,0.15);
+  }
+
+  .hero h1 span {
+    color: var(--gold);
+  }
+
+  .hero p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 300;
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Benefits bar */
+  .benefits {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 2rem 0 0;
+    padding: 0 1rem;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .benefit-item .dot {
+    width: 5px; height: 5px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Form wrapper */
+  .form-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 700px;
+    padding: 0 1.5rem 4rem;
+    animation: fadeUp 0.7s ease 0.2s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .form-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+      0 40px 80px rgba(0,0,0,0.5),
+      0 0 0 1px rgba(201,168,76,0.08) inset;
+    position: relative;
+  }
+
+  .form-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent);
+  }
+
+  .form-card-header {
+    padding: 1.5rem 2rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-card-header .step-badge {
+    background: var(--gold-dim);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  .form-card-header p {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  /* Google Form iframe */
+  .iframe-container {
+    width: 100%;
+    background: #fff;
+    min-height: 700px;
+  }
+
+  .iframe-container iframe {
+    width: 100%;
+    min-height: 700px;
+    border: none;
+    display: block;
+  }
+
+  /* Footer */
+  .footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 2rem 3rem;
+    animation: fadeUp 0.7s ease 0.4s both;
+  }
+
+  .footer-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .footer-divider-line {
+    width: 40px; height: 1px;
+    background: var(--border);
+  }
+
+  .footer p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .footer .secure {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 3rem 1.5rem 2rem; }
+    .benefits { gap: 1rem; }
+    .form-card-header { padding: 1.2rem 1.2rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <span class="crown">♛</span>
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond"></div>
+    <span class="badge">Membership</span>
+    <div class="divider-diamond"></div>
+    <div class="divider-line right"></div>
+  </div>
+  <h1>สมัคร<span>สมาชิก</span><br>ร้านค้าของเรา</h1>
+  <p>เข้าร่วมเป็นส่วนหนึ่งกับเรา รับสิทธิพิเศษและข้อเสนอสุดเอ็กซ์คลูซีฟสำหรับสมาชิกเท่านั้น</p>
+
+  <div class="benefits">
+    <div class="benefit-item"><div class="dot"></div>ส่วนลดพิเศษสำหรับสมาชิก</div>
+    <div class="benefit-item"><div class="dot"></div>รับข่าวสารก่อนใคร</div>
+    <div class="benefit-item"><div class="dot"></div>สะสมแต้มทุกการซื้อ</div>
+  </div>
+</div>
+
+<!-- Form -->
+<div class="form-wrapper">
+  <div class="form-card">
+    <div class="form-card-header">
+      <span class="step-badge">📋 กรอกข้อมูล</span>
+      <p>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+    </div>
+    <div class="iframe-container">
+      <iframe
+        src="https://docs.google.com/forms/d/e/1FAIpQLSfLEsg3ZHYElN6-A9u9KQRwUF2jyFkk-B5pAr8GFq1LEuQKmw/viewform?embedded=true"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        loading="lazy"
+      >กำลังโหลด…</iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-divider">
+    <div class="footer-divider-line"></div>
+    <div class="divider-diamond" style="width:4px;height:4px;background:var(--border)"></div>
+    <div class="footer-divider-line"></div>
+  </div>
+  <p>ข้อมูลของคุณจะถูกเก็บรักษาอย่างปลอดภัย<br>และไม่ถูกเปิดเผยต่อบุคคลที่สาม</p>
+  <p class="secure">🔒 Secured & Protected</p>
+</div>
+
+</body>
+</html>
